@@ -82,7 +82,14 @@ public class AI
         }
         for ( int i = 0 ; i < opp_heroes.length ; ++i )
         {
-            
+            Ability[] att = my_heroes[0].getOffensiveAbilities() ;
+            for ( int j = 0 ; j < att.length ; ++j )
+            {
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[0].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[0].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[1].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[1].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[2].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[2].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[3].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[3].getCurrentCell() ) ;
+            }
         }
     }
 
