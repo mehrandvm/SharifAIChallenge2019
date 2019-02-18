@@ -59,9 +59,9 @@ public class AI
         Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , trg_cell[2] ) ;
         Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , trg_cell[3] ) ;
         world.moveHero( my_heroes[0] , dir_1[0]);
-        world.moveHero( my_heroes[1] , dir_1[0]);
-        world.moveHero( my_heroes[2] , dir_1[0]);
-        world.moveHero( my_heroes[3] , dir_1[0]);
+        world.moveHero( my_heroes[1] , dir_2[0]);
+        world.moveHero( my_heroes[2] , dir_3[0]);
+        world.moveHero( my_heroes[3] , dir_4[0]);
     }
 
     public void actionTurn( World world )
@@ -69,17 +69,6 @@ public class AI
         System.out.println( "action started" ) ;
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes() ;
-        Hero SENTRY ;
-        Hero GUARDIAN ;
-        Hero HEALER ;
-        Hero BLASTER ;
-        for ( int i = 0 ; i < my_heroes.length ; ++i )
-        {
-            if ( HeroName.SENTRY == my_heroes[i].getName() ) SENTRY = my_heroes[i] ;
-            if ( HeroName.HEALER == my_heroes[i].getName() ) HEALER = my_heroes[i] ;
-            if ( HeroName.GUARDIAN == my_heroes[i].getName() ) GUARDIAN = my_heroes[i] ;
-            if ( HeroName.BLASTER == my_heroes[i].getName() ) BLASTER = my_heroes[i] ;
-        }
         for ( int i = 0 ; i < opp_heroes.length ; ++i )
         {
             Ability[] att = my_heroes[0].getOffensiveAbilities() ;
@@ -89,6 +78,39 @@ public class AI
                 if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[1].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[1].getCurrentCell() ) ;
                 if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[2].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[2].getCurrentCell() ) ;
                 if ( att[i].getRange() >= world.manhattanDistance( my_heroes[0].getCurrentCell() , opp_heroes[3].getCurrentCell() ) ) world.castAbility( my_heroes[0] , att[i] , opp_heroes[3].getCurrentCell() ) ;
+            }
+        }
+        for ( int i = 0 ; i < opp_heroes.length ; ++i )
+        {
+            Ability[] att = my_heroes[1].getOffensiveAbilities() ;
+            for ( int j = 0 ; j < att.length ; ++j )
+            {
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[0].getCurrentCell() ) ) world.castAbility( my_heroes[1] , att[i] , opp_heroes[0].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[1].getCurrentCell() ) ) world.castAbility( my_heroes[1] , att[i] , opp_heroes[1].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[2].getCurrentCell() ) ) world.castAbility( my_heroes[1] , att[i] , opp_heroes[2].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[3].getCurrentCell() ) ) world.castAbility( my_heroes[1] , att[i] , opp_heroes[3].getCurrentCell() ) ;
+            }
+        }
+        for ( int i = 0 ; i < opp_heroes.length ; ++i )
+        {
+            Ability[] att = my_heroes[2].getOffensiveAbilities() ;
+            for ( int j = 0 ; j < att.length ; ++j )
+            {
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[0].getCurrentCell() ) ) world.castAbility( my_heroes[2] , att[i] , opp_heroes[0].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[1].getCurrentCell() ) ) world.castAbility( my_heroes[2] , att[i] , opp_heroes[1].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[2].getCurrentCell() ) ) world.castAbility( my_heroes[2] , att[i] , opp_heroes[2].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[3].getCurrentCell() ) ) world.castAbility( my_heroes[2] , att[i] , opp_heroes[3].getCurrentCell() ) ;
+            }
+        }
+        for ( int i = 0 ; i < opp_heroes.length ; ++i )
+        {
+            Ability[] att = my_heroes[3].getOffensiveAbilities() ;
+            for ( int j = 0 ; j < att.length ; ++j )
+            {
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[0].getCurrentCell() ) ) world.castAbility( my_heroes[3] , att[i] , opp_heroes[0].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[1].getCurrentCell() ) ) world.castAbility( my_heroes[3] , att[i] , opp_heroes[1].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[2].getCurrentCell() ) ) world.castAbility( my_heroes[3] , att[i] , opp_heroes[2].getCurrentCell() ) ;
+                if ( att[i].getRange() >= world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[3].getCurrentCell() ) ) world.castAbility( my_heroes[3] , att[i] , opp_heroes[3].getCurrentCell() ) ;
             }
         }
     }
