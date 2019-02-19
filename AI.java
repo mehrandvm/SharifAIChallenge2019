@@ -12,6 +12,29 @@ public class AI
     public void preProcess( World world )
     {
         System.out.println("pre process started") ;
+        for ( int i = 0 ; i < world.getMap().getRowNum() ; ++i ) {
+            for (int j = 0; j < world.getMap().getColumnNum(); ++j) {
+                if (world.getMap().getCell(i,j).isWall()){
+                    System.out.print("#");
+                }
+                else if (world.getMap().getCell(i,j).isInMyRespawnZone()){
+                    System.out.print("-");
+                }
+                else if (world.getMap().getCell(i,j).isInOppRespawnZone()){
+                    System.out.print("~");
+                }
+                else if (world.getMap().getCell(i,j).isInObjectiveZone()){
+                    System.out.print("×");
+                }
+                else if (world.getMap().getCell(i,j).isInVision()){
+                    System.out.print("O");
+                }
+                else {
+                    System.out.print("Q");
+                }
+            }
+            System.out.println(" ");
+        }
     }
 
     public void pickTurn( World world )
