@@ -19,19 +19,19 @@ public class AI
         System.out.println("pick started");
         if ( world.getCurrentTurn() == 0 )
         {
-            world.pickHero( HeroName.SENTRY ) ;
+            world.pickHero( HeroName.BLASTER ) ;
         }
         if ( world.getCurrentTurn() == 1 )
         {
-            world.pickHero( HeroName.SENTRY );
+            world.pickHero( HeroName.BLASTER );
         }
         if ( world.getCurrentTurn() == 2 )
         {
-            world.pickHero( HeroName.SENTRY );
+            world.pickHero( HeroName.BLASTER );
         }
         if ( world.getCurrentTurn() == 3 )
         {
-            world.pickHero( HeroName.SENTRY);
+            world.pickHero( HeroName.BLASTER );
         }
     }
 
@@ -84,11 +84,22 @@ public class AI
             Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , opp_respawn_zone[1] ) ;
             Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , opp_respawn_zone[2] ) ;
             Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , opp_respawn_zone[3] ) ;
-            world.moveHero( my_heroes[0] , dir_1[0]);
-            world.moveHero( my_heroes[1] , dir_2[0]);
-            world.moveHero( my_heroes[2] , dir_3[0]);
-            world.moveHero( my_heroes[3] , dir_4[0]);
-
+            if ( !( my_heroes[0].getCurrentCell().isInOppRespawnZone()))
+            {
+                if (!(my_heroes[1].getCurrentCell().isInOppRespawnZone()))
+                {
+                    if (!(my_heroes[2].getCurrentCell().isInOppRespawnZone()))
+                    {
+                        if (!(my_heroes[3].getCurrentCell().isInOppRespawnZone()))
+                        {
+                            world.moveHero(my_heroes[0], dir_1[0]);
+                            world.moveHero(my_heroes[1], dir_2[0]);
+                            world.moveHero(my_heroes[2], dir_3[0]);
+                            world.moveHero(my_heroes[3], dir_4[0]);
+                        }
+                    }
+                }
+            }
     }
 
     public void actionTurn( World world )
@@ -104,10 +115,10 @@ public class AI
                 {
                      Hero locked_hero = world.getOppHero( world.getMap().getCells()[i][j] ) ;
                      Cell target_cell = locked_hero.getCurrentCell() ;
-                     world.castAbility( my_heroes[0] , AbilityName.SENTRY_RAY , target_cell );
-                     world.castAbility( my_heroes[1] , AbilityName.SENTRY_RAY , target_cell );
-                     world.castAbility( my_heroes[2] , AbilityName.SENTRY_RAY , target_cell );
-                     world.castAbility( my_heroes[3] , AbilityName.SENTRY_RAY , target_cell );
+                     world.castAbility( my_heroes[0] , AbilityName.BLASTER_BOMB , target_cell );
+                     world.castAbility( my_heroes[1] , AbilityName.BLASTER_BOMB , target_cell );
+                     world.castAbility( my_heroes[2] , AbilityName.BLASTER_BOMB , target_cell );
+                     world.castAbility( my_heroes[3] , AbilityName.BLASTER_BOMB , target_cell );
                 }
             }
         }
