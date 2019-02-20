@@ -12,29 +12,6 @@ public class AI
     public void preProcess( World world )
     {
         System.out.println("pre process started") ;
-        for ( int i = 0 ; i < world.getMap().getRowNum() ; ++i ) {
-            for (int j = 0; j < world.getMap().getColumnNum(); ++j) {
-                if (world.getMap().getCell(i,j).isWall()){
-                    System.out.print("#");
-                }
-                else if (world.getMap().getCell(i,j).isInMyRespawnZone()){
-                    System.out.print("-");
-                }
-                else if (world.getMap().getCell(i,j).isInOppRespawnZone()){
-                    System.out.print("~");
-                }
-                else if (world.getMap().getCell(i,j).isInObjectiveZone()){
-                    System.out.print("×");
-                }
-                else if (world.getMap().getCell(i,j).isInVision()){
-                    System.out.print("O");
-                }
-                else {
-                    System.out.print("Q");
-                }
-            }
-            System.out.println(" ");
-        }
     }
 
     public void pickTurn( World world )
@@ -73,55 +50,21 @@ public class AI
             if ( opp_heroes[i].getName() == HeroName.HEALER ) HEALER++ ;
             if ( opp_heroes[i].getName() == HeroName.SENTRY ) SENTARY++ ;
         }
-//        if ( !( my_heroes[0].getCurrentCell().isInObjectiveZone() ) || !( my_heroes[1].getCurrentCell().isInObjectiveZone() ) || !( my_heroes[2].getCurrentCell().isInObjectiveZone() ) || !( my_heroes[3].getCurrentCell().isInObjectiveZone() ) )
-//        {
-//            for ( int i = 0 ; i < trg_cell.length ; ++i )
-//            {
-//                trg_cell[i] = obj_cell[i*3] ;
-//            }
-//            Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , trg_cell[0] ) ;
-//            Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , trg_cell[1] ) ;
-//            Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , trg_cell[2] ) ;
-//            Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , trg_cell[3] ) ;
-//            world.moveHero( my_heroes[0] , dir_1[0]);
-//            world.moveHero( my_heroes[1] , dir_2[0]);
-//            world.moveHero( my_heroes[2] , dir_3[0]);
-//            world.moveHero( my_heroes[3] , dir_4[0]);
-//        }
-//        if ( world.getCurrentTurn() > 0 )
-//        {
-            Cell[] opp_respawn_zone = new Cell[4] ;
-            for ( int i = 0 , k = 0 ; i < world.getMap().getRowNum() ; ++i )
+            Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
+            int index1 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+            int index2 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+            int index3 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+            int index4 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+            Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , abjectiv_zone[index1] ) ;
+            Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , abjectiv_zone[index2] ) ;
+            Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , abjectiv_zone[index3] ) ;
+            Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , abjectiv_zone[index4] ) ;
+            if ( !(my_heroes[0].getCurrentCell().isInObjectiveZone()) || !(my_heroes[1].getCurrentCell().isInObjectiveZone()) || !(my_heroes[2].getCurrentCell().isInObjectiveZone()) || !(my_heroes[3].getCurrentCell().isInObjectiveZone() ) )
             {
-                for ( int j = 0 ; j < world.getMap().getColumnNum() ; ++j )
-                {
-                    if (world.getMap().getCells()[i][j].isInOppRespawnZone())
-                    {
-                        opp_respawn_zone[k] = world.getMap().getCells()[i][j];
-                        ++k;
-                    }
-                }
-            }
-
-            Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , opp_respawn_zone[0] ) ;
-            Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , opp_respawn_zone[1] ) ;
-            Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , opp_respawn_zone[2] ) ;
-            Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , opp_respawn_zone[3] ) ;
-            if ( !( my_heroes[0].getCurrentCell().isInOppRespawnZone()))
-            {
-                if (!(my_heroes[1].getCurrentCell().isInOppRespawnZone()))
-                {
-                    if (!(my_heroes[2].getCurrentCell().isInOppRespawnZone()))
-                    {
-                        if (!(my_heroes[3].getCurrentCell().isInOppRespawnZone()))
-                        {
-                            world.moveHero(my_heroes[0], dir_1[0]);
-                            world.moveHero(my_heroes[1], dir_2[0]);
-                            world.moveHero(my_heroes[2], dir_3[0]);
-                            world.moveHero(my_heroes[3], dir_4[0]);
-                        }
-                    }
-                }
+                world.moveHero(my_heroes[0], dir_1[0]);
+                world.moveHero(my_heroes[1], dir_2[0]);
+                world.moveHero(my_heroes[2], dir_3[0]);
+                world.moveHero(my_heroes[3], dir_4[0]);
             }
     }
 
@@ -138,10 +81,14 @@ public class AI
                 {
                      Hero locked_hero = world.getOppHero( world.getMap().getCells()[i][j] ) ;
                      Cell target_cell = locked_hero.getCurrentCell() ;
-                     world.castAbility( my_heroes[0] , AbilityName.BLASTER_BOMB , target_cell );
-                     world.castAbility( my_heroes[1] , AbilityName.BLASTER_BOMB , target_cell );
-                     world.castAbility( my_heroes[2] , AbilityName.BLASTER_BOMB , target_cell );
-                     world.castAbility( my_heroes[3] , AbilityName.BLASTER_BOMB , target_cell );
+                     if ( my_heroes[0].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[0] , AbilityName.BLASTER_BOMB , target_cell );
+                     if ( my_heroes[1].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[1] , AbilityName.BLASTER_BOMB , target_cell );
+                     if ( my_heroes[2].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[2] , AbilityName.BLASTER_BOMB , target_cell );
+                     if ( my_heroes[3].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[3] , AbilityName.BLASTER_BOMB , target_cell );
+                     if ( my_heroes[0].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[0] , AbilityName.BLASTER_ATTACK , target_cell );
+                     if ( my_heroes[1].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[1] , AbilityName.BLASTER_ATTACK , target_cell );
+                     if ( my_heroes[2].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[2] , AbilityName.BLASTER_ATTACK , target_cell );
+                     if ( my_heroes[3].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[3] , AbilityName.BLASTER_ATTACK , target_cell );
                 }
             }
         }
