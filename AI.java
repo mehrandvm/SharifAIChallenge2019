@@ -43,29 +43,26 @@ public class AI
         Hero[] opp_heroes = world.getOppHeroes() ;
         Cell[] trg_cell = new Cell[4] ;
         int BLASTER = 0 , GUARDIAN = 0 , HEALER = 0 , SENTARY = 0 ;
-        for ( int i = 0 ; i < opp_heroes.length ; ++i )
+
+        Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
+        int index1 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+        int index2 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+        int index3 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+        int index4 =  ( int )( Math.random() * abjectiv_zone.length ) ;
+        Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , abjectiv_zone[index1] ) ;
+        Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , abjectiv_zone[index2] ) ;
+        Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , abjectiv_zone[index3] ) ;
+        Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , abjectiv_zone[index4] ) ;
+        if ( !(my_heroes[0].getCurrentCell().isInObjectiveZone()) || !(my_heroes[1].getCurrentCell().isInObjectiveZone()) || !(my_heroes[2].getCurrentCell().isInObjectiveZone()) || !(my_heroes[3].getCurrentCell().isInObjectiveZone() ) )
         {
-            if ( opp_heroes[i].getName() == HeroName.BLASTER ) BLASTER++ ;
-            if ( opp_heroes[i].getName() == HeroName.GUARDIAN ) GUARDIAN++ ;
-            if ( opp_heroes[i].getName() == HeroName.HEALER ) HEALER++ ;
-            if ( opp_heroes[i].getName() == HeroName.SENTRY ) SENTARY++ ;
-        }
-            Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
-            int index1 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-            int index2 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-            int index3 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-            int index4 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-            Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , abjectiv_zone[index1] ) ;
-            Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , abjectiv_zone[index2] ) ;
-            Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , abjectiv_zone[index3] ) ;
-            Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , abjectiv_zone[index4] ) ;
-            if ( !(my_heroes[0].getCurrentCell().isInObjectiveZone()) || !(my_heroes[1].getCurrentCell().isInObjectiveZone()) || !(my_heroes[2].getCurrentCell().isInObjectiveZone()) || !(my_heroes[3].getCurrentCell().isInObjectiveZone() ) )
+            if ( )
             {
                 world.moveHero(my_heroes[0], dir_1[0]);
                 world.moveHero(my_heroes[1], dir_2[0]);
                 world.moveHero(my_heroes[2], dir_3[0]);
                 world.moveHero(my_heroes[3], dir_4[0]);
             }
+        }
     }
 
     public void actionTurn( World world )
