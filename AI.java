@@ -43,52 +43,56 @@ public class AI
         Hero[] opp_heroes = world.getOppHeroes() ;
         Cell[] trg_cell = new Cell[4] ;
         int BLASTER = 0 , GUARDIAN = 0 , HEALER = 0 , SENTARY = 0 ;
-
         Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
-        int index1 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-        int index2 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-        int index3 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-        int index4 =  ( int )( Math.random() * abjectiv_zone.length ) ;
-        Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , abjectiv_zone[index1] ) ;
-        Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , abjectiv_zone[index2] ) ;
-        Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , abjectiv_zone[index3] ) ;
-        Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , abjectiv_zone[index4] ) ;
-        if ( !(my_heroes[0].getCurrentCell().isInObjectiveZone()) || !(my_heroes[1].getCurrentCell().isInObjectiveZone()) || !(my_heroes[2].getCurrentCell().isInObjectiveZone()) || !(my_heroes[3].getCurrentCell().isInObjectiveZone() ) )
+        int rowMax = Integer.MIN_VALUE ;
+        int columnMax = Integer.MIN_VALUE ;
+        int rowMin = Integer.MAX_VALUE ;
+        int columnMin = Integer.MAX_VALUE ;
+        for ( int i = 0 ; i < abjectiv_zone.length ; ++i )
         {
-            if ( )
-            {
-                world.moveHero(my_heroes[0], dir_1[0]);
-                world.moveHero(my_heroes[1], dir_2[0]);
-                world.moveHero(my_heroes[2], dir_3[0]);
-                world.moveHero(my_heroes[3], dir_4[0]);
-            }
+            if ( abjectiv_zone[i].getRow() > rowMax ) rowMax = abjectiv_zone[i].getRow() ;
+            if ( abjectiv_zone[i].getColumn() > columnMax ) columnMax =abjectiv_zone[i].getColumn() ;
+            if ( abjectiv_zone[i].getRow() < rowMin ) rowMin = abjectiv_zone[i].getRow() ;
+            if ( abjectiv_zone[i].getColumn() < columnMin ) columnMin = abjectiv_zone[i].getColumn() ;
         }
+        Direction[] dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , world.getMap().getCell( rowMin , columnMin ) ) ;
+        Direction[] dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , world.getMap().getCell( rowMin , columnMax) ) ;
+        Direction[] dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , world.getMap().getCell( rowMax , columnMin) ) ;
+        Direction[] dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , world.getMap().getCell( rowMax , columnMax) ) ;
+        if ( dir_1.length != 0 ) world.moveHero(my_heroes[0], dir_1[0]) ;
+        if ( dir_2.length != 0 ) world.moveHero(my_heroes[1], dir_2[0]) ;
+        if ( dir_3.length != 0 ) world.moveHero(my_heroes[2], dir_3[0]) ;
+        if ( dir_4.length != 0 ) world.moveHero(my_heroes[3], dir_4[0]) ;
     }
 
-    public void actionTurn( World world )
-    {
-        System.out.println( "action started" ) ;
+    public void actionTurn( World world ) {
+        System.out.println("action started");
         Hero[] my_heroes = world.getMyHeroes();
-        Hero[] opp_heroes = world.getOppHeroes() ;
-        for ( int i = 0 ; i < world.getMap().getRowNum() ; ++i )
+        Hero[] opp_heroes = world.getOppHeroes();
+        if ( opp_heroes.length != 0 )
         {
-            for ( int j = 0 ; j < world.getMap().getColumnNum() ; ++j )
+            Cell target_cell = null ;
+            int oppHP = Integer.MAX_VALUE ;
+            for( int i = 0 ; i < opp_heroes.length ; ++i  )
             {
-                if ( world.getOppHero( world.getMap().getCells()[i][j] ) != null )
+                if ( opp_heroes[i].getCurrentHP() < oppHP )
                 {
-                     Hero locked_hero = world.getOppHero( world.getMap().getCells()[i][j] ) ;
-                     Cell target_cell = locked_hero.getCurrentCell() ;
-                     if ( my_heroes[0].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[0] , AbilityName.BLASTER_BOMB , target_cell );
-                     if ( my_heroes[1].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[1] , AbilityName.BLASTER_BOMB , target_cell );
-                     if ( my_heroes[2].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[2] , AbilityName.BLASTER_BOMB , target_cell );
-                     if ( my_heroes[3].getAbility( AbilityName.BLASTER_BOMB ).isReady() ) world.castAbility( my_heroes[3] , AbilityName.BLASTER_BOMB , target_cell );
-                     if ( my_heroes[0].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[0] , AbilityName.BLASTER_ATTACK , target_cell );
-                     if ( my_heroes[1].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[1] , AbilityName.BLASTER_ATTACK , target_cell );
-                     if ( my_heroes[2].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[2] , AbilityName.BLASTER_ATTACK , target_cell );
-                     if ( my_heroes[3].getAbility( AbilityName.BLASTER_ATTACK ).isReady() ) world.castAbility( my_heroes[3] , AbilityName.BLASTER_ATTACK , target_cell );
+                    oppHP = opp_heroes[i].getCurrentHP() ;
+                    target_cell = opp_heroes[i].getCurrentCell() ;
                 }
             }
+            if (my_heroes[0].getCurrentHP() < 81 && my_heroes[0].getAbility(AbilityName.BLASTER_DODGE).isReady() )
+            if (my_heroes[1].getCurrentHP() < 81 && my_heroes[1].getAbility(AbilityName.BLASTER_DODGE).isReady() )
+            if (my_heroes[2].getCurrentHP() < 81 && my_heroes[2].getAbility(AbilityName.BLASTER_DODGE).isReady() )
+            if (my_heroes[3].getCurrentHP() < 81 && my_heroes[3].getAbility(AbilityName.BLASTER_DODGE).isReady() )
+            if (my_heroes[0].getAbility(AbilityName.BLASTER_BOMB).isReady() && target_cell != null ) world.castAbility(my_heroes[0], AbilityName.BLASTER_BOMB, target_cell);
+            if (my_heroes[1].getAbility(AbilityName.BLASTER_BOMB).isReady() && target_cell != null ) world.castAbility(my_heroes[1], AbilityName.BLASTER_BOMB, target_cell);
+            if (my_heroes[2].getAbility(AbilityName.BLASTER_BOMB).isReady() && target_cell != null ) world.castAbility(my_heroes[2], AbilityName.BLASTER_BOMB, target_cell);
+            if (my_heroes[3].getAbility(AbilityName.BLASTER_BOMB).isReady() && target_cell != null ) world.castAbility(my_heroes[3], AbilityName.BLASTER_BOMB, target_cell);
+            if (my_heroes[0].getAbility(AbilityName.BLASTER_ATTACK).isReady() && target_cell != null ) world.castAbility(my_heroes[0], AbilityName.BLASTER_ATTACK, target_cell);
+            if (my_heroes[1].getAbility(AbilityName.BLASTER_ATTACK).isReady() && target_cell != null ) world.castAbility(my_heroes[1], AbilityName.BLASTER_ATTACK, target_cell);
+            if (my_heroes[2].getAbility(AbilityName.BLASTER_ATTACK).isReady() && target_cell != null ) world.castAbility(my_heroes[2], AbilityName.BLASTER_ATTACK, target_cell);
+            if (my_heroes[3].getAbility(AbilityName.BLASTER_ATTACK).isReady() && target_cell != null ) world.castAbility(my_heroes[3], AbilityName.BLASTER_ATTACK, target_cell);
         }
     }
-
 }
