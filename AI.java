@@ -42,6 +42,15 @@ public class AI
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes() ;
         Cell[] trg_cell = new Cell[4] ;
+        for( int i = 0 ; i < my_heroes.length ; ++i )
+        {
+            if ( my_heroes[i].getName() == HeroName.HEALER && i != 0 )
+            {
+                Hero heroSwaper = my_heroes[0] ;
+                my_heroes[0] = my_heroes[i] ;
+                my_heroes[i] = heroSwaper ;
+            }
+        }
         int BLASTER = 0 , GUARDIAN = 0 , HEALER = 0 , SENTARY = 0 ;
         Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
         int rowMax = Integer.MIN_VALUE ;
@@ -120,9 +129,28 @@ public class AI
         {
             if ( myHero[i].getName() == HeroName.HEALER && i != 0 )
             {
-                Hero heroSwaper = myHero[i] ;
-                m
+                Hero heroSwaper = myHero[0] ;
+                myHero[0] = myHero[i] ;
+                myHero[i] = heroSwaper ;
             }
+        }
+        Hero lowHPHero = null ;
+        int HP = Integer.MAX_VALUE ;
+        for ( int i = 1 ; i < myHero.length ; ++i )
+        {
+            if ( myHero[i].getCurrentHP() < HP )
+            {
+                HP = myHero[i].getCurrentHP();
+                lowHPHero = myHero[i] ;
+            }
+        }
+        if ( lowHPHero.getCurrentCell().isInObjectiveZone() )
+        {
+
+        }
+        else
+        {
+
         }
     }
 }
