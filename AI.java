@@ -98,29 +98,33 @@ public class AI
         if ( dir_4.length != 0 && currentHP - my_heroes[3].getMoveAPCost() > 0 ) world.moveHero(my_heroes[3], dir_4[0]) ;
     }
 
-    public void actionTurn( World world ) {
+        public void actionTurn( World world ) {
         System.out.println("action started");
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes();
-        if ( opp_heroes.length != 0 )
-        {
-            Cell target_cell = null ;
-            int oppHP = Integer.MAX_VALUE ;
-            for( int i = 0 ; i < opp_heroes.length ; ++i  )
-            {
-                if ( opp_heroes[i].getCurrentHP() < oppHP )
-                {
-                    oppHP = opp_heroes[i].getCurrentHP() ;
-                    target_cell = opp_heroes[i].getCurrentCell() ;
-                }
+        for( int i = 0 ; i < my_heroes.length ; ++i ) {
+            if (my_heroes[i].getName() == HeroName.HEALER) {
+                //Do Healer_Heal
+
+                //Do Healer_Dodge
+
+
+                //Do Healer_Attack
             }
-            if (my_heroes[1].getCurrentHP() < 81 && my_heroes[1].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() ) world.castAbility(my_heroes[1], AbilityName.GUARDIAN_FORTIFY , my_heroes[1].getCurrentCell() );
-            if (my_heroes[2].getCurrentHP() < 81 && my_heroes[2].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() ) world.castAbility(my_heroes[2], AbilityName.GUARDIAN_FORTIFY , my_heroes[2].getCurrentCell() );
-            if (my_heroes[3].getCurrentHP() < 81 && my_heroes[3].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() ) world.castAbility(my_heroes[3], AbilityName.GUARDIAN_FORTIFY , my_heroes[3].getCurrentCell() );
-            if (my_heroes[1].getAbility(AbilityName.GUARDIAN_ATTACK ).isReady() && target_cell != null ) world.castAbility(my_heroes[1], AbilityName.GUARDIAN_ATTACK , target_cell );
-            if (my_heroes[2].getAbility(AbilityName.GUARDIAN_ATTACK ).isReady() && target_cell != null ) world.castAbility(my_heroes[2], AbilityName.GUARDIAN_ATTACK , target_cell );
-            if (my_heroes[3].getAbility(AbilityName.GUARDIAN_ATTACK ).isReady() && target_cell != null ) world.castAbility(my_heroes[3], AbilityName.GUARDIAN_ATTACK , target_cell );
+            if(my_heroes[i].getName() == HeroName.GUARDIAN){
+                //Do Guardian_Attack
+                
+
+                //Do Guardian_fortify
+
+
+
+                //Do Guardian_Dodge
+
+
+            }
         }
+
     }
     public Cell healerCell ( World world )
     {
