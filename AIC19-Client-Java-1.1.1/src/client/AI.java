@@ -36,27 +36,24 @@ public class AI
     }
 
     public void moveTurn( World world )
-    {
-        System.out.println("move started");
+    {System.out.println("move started");
         Cell[] obj_cell = world.getMap().getObjectiveZone() ;
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes() ;
         Cell[] trg_cell = new Cell[4] ;
-        for( int i = 0 ; i < my_heroes.length ; ++i )
-        {
-            if ( my_heroes[i].getName() == HeroName.HEALER && i != 0 )
-            {
-                Hero heroSwaper = my_heroes[0] ;
-                my_heroes[0] = my_heroes[i] ;
-                my_heroes[i] = heroSwaper ;
-            }
-        }
         int BLASTER = 0 , GUARDIAN = 0 , HEALER = 0 , SENTARY = 0 ;
         Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
         int rowMax = Integer.MIN_VALUE ;
         int columnMax = Integer.MIN_VALUE ;
         int rowMin = Integer.MAX_VALUE ;
         int columnMin = Integer.MAX_VALUE ;
+        for ( int i = 0 ; i < abjectiv_zone.length ; ++i )
+        {
+            if ( abjectiv_zone[i].getRow() > rowMax ) rowMax = abjectiv_zone[i].getRow() ;
+            if ( abjectiv_zone[i].getColumn() > columnMax ) columnMax =abjectiv_zone[i].getColumn() ;
+            if ( abjectiv_zone[i].getRow() < rowMin ) rowMin = abjectiv_zone[i].getRow() ;
+            if ( abjectiv_zone[i].getColumn() < columnMin ) columnMin = abjectiv_zone[i].getColumn() ;
+        }
         Direction[] dir_1 ;
         Direction[] dir_2 ;
         Direction[] dir_3 ;
@@ -65,13 +62,6 @@ public class AI
         dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , world.getMap().getCell( ( rowMin + rowMax ) / 2 , columnMax) ) ;
         dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , world.getMap().getCell( rowMax , ( columnMin + columnMax ) / 2 ) ) ;
         dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , world.getMap().getCell( rowMin , ( columnMin + columnMax ) / 2 ) ) ;
-        for ( int i = 0 ; i < abjectiv_zone.length ; ++i )
-        {
-            if ( abjectiv_zone[i].getRow() > rowMax ) rowMax = abjectiv_zone[i].getRow() ;
-            if ( abjectiv_zone[i].getColumn() > columnMax ) columnMax =abjectiv_zone[i].getColumn() ;
-            if ( abjectiv_zone[i].getRow() < rowMin ) rowMin = abjectiv_zone[i].getRow() ;
-            if ( abjectiv_zone[i].getColumn() < columnMin ) columnMin = abjectiv_zone[i].getColumn() ;
-        }
         int opp_hero_HP = Integer.MAX_VALUE ;
         Cell target_cell ;
         if ( opp_heroes.length > 0 )
@@ -88,15 +78,21 @@ public class AI
                 }
             }
         }
-        dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , healerCell( world ) ) ;
-        int currentHP = world.getAP() ;
-        if ( dir_1.length != 0 && currentHP > my_heroes[0].getMoveAPCost() ) world.moveHero( my_heroes[0] , dir_1[0] );
-        currentHP -= my_heroes[0].getMoveAPCost() ;
-        if ( dir_2.length != 0 && currentHP - my_heroes[1].getMoveAPCost() > 0 ) world.moveHero(my_heroes[1], dir_2[0]) ;
-        currentHP -= my_heroes[1].getMoveAPCost() ;
-        if ( dir_3.length != 0 && currentHP - my_heroes[2].getMoveAPCost() > 0 ) world.moveHero(my_heroes[2], dir_3[0]) ;
-        currentHP -= my_heroes[2].getMoveAPCost() ;
-        if ( dir_4.length != 0 && currentHP - my_heroes[3].getMoveAPCost() > 0 ) world.moveHero(my_heroes[3], dir_4[0]) ;
+        Hero lowHPHero = null ;
+        int HP = Integer.MAX_VALUE ;
+        for ( int i = 1 ; i < my_heroes.length ; ++i )
+        {
+            if ( my_heroes[i].getCurrentHP() < HP )
+            {
+                HP = my_heroes[i].getCurrentHP();
+                lowHPHero = my_heroes[i] ;
+            }
+        }
+        if ( lowHPHero.getCurrentCell().isInObjectiveZone() ) dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , lowHPHero.getCurrentCell() ) ;
+        if ( dir_1.length != 0 ) world.moveHero(my_heroes[0], dir_1[0] );
+        if ( dir_2.length != 0 ) world.moveHero(my_heroes[1], dir_2[0]) ;
+        if ( dir_3.length != 0 ) world.moveHero(my_heroes[2], dir_3[0]) ;
+        if ( dir_4.length != 0 ) world.moveHero(my_heroes[3], dir_4[0]) ;
     }
 
     public void actionTurn( World world ) {
@@ -172,35 +168,5 @@ public class AI
 
             }
         }
-
     }
-    public Cell healerCell ( World world )
-    {
-        Hero[] myHero = world.getMyHeroes() ;
-        for( int i = 0 ; i < myHero.length ; ++i )
-        {
-            if ( myHero[i].getName() == HeroName.HEALER && i != 0 )
-            {
-                Hero heroSwaper = myHero[0] ;
-                myHero[0] = myHero[i] ;
-                myHero[i] = heroSwaper ;
-            }
-        }
-        Hero lowHPHero = null ;
-        int HP = Integer.MAX_VALUE ;
-        for ( int i = 1 ; i < myHero.length ; ++i )
-        {
-            if ( myHero[i].getCurrentHP() < HP )
-            {
-                HP = myHero[i].getCurrentHP();
-                lowHPHero = myHero[i] ;
-            }
-        }
-        Cell[] objectivZone = world.getMap().getObjectiveZone() ;
-        for ( int i = 0 ; i < objectivZone.length ; ++i )
-        {
-            if ( world.manhattanDistance( objectivZone[i] , lowHPHero.getCurrentCell() ) < 4 ) return objectivZone[i] ;
-        }
-        return objectivZone[(int)( Math.random() * objectivZone.length ) ] ;
-    }
-}s
+}
