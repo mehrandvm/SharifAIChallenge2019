@@ -103,6 +103,7 @@ public class AI
         System.out.println("action started");
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes();
+        boolean sign=false;
         for( int i = 0 ; i < my_heroes.length ; ++i )
         {
             if ( my_heroes[i].getName() == HeroName.HEALER && i != 0 )
@@ -122,10 +123,6 @@ public class AI
                     iNeedHeal = my_heroes[3];
                 if (my_heroes[0].getAbility(AbilityName.HEALER_HEAL).isReady())
                     world.castAbility(my_heroes[0], AbilityName.HEALER_HEAL, iNeedHeal.getCurrentCell());
-                    //Do Healer_Dodge
-                else if (false) {
-
-                }
 
                 //Do Healer_Attack
                 else {
@@ -145,7 +142,8 @@ public class AI
                 }
             }
             if(my_heroes[i].getName() == HeroName.GUARDIAN){
-                Cell target_cell=null;
+                int healer_index=0;
+                Cell target_cell_a=null;
                 for(int j=0;j<4;j++){
                     if(my_heroes[j].getName()== HeroName.HEALER)
                         healer_index=j;
@@ -166,10 +164,10 @@ public class AI
                         int distance=world.manhattanDistance(my_heroes[i].getCurrentCell(),opp_heroes[j].getCurrentCell());
                         if(distance < min){
                             min=distance;
-                            target_cell=opp_heroes[j].getCurrentCell();
+                            target_cell_a=opp_heroes[j].getCurrentCell();
                         }
                     }
-                    world.castAbility(my_heroes[i],AbilityName.GUARDIAN_ATTACK,target_cell);
+                    world.castAbility(my_heroes[i],AbilityName.GUARDIAN_ATTACK,target_cell_a);
                 }
 
             }
