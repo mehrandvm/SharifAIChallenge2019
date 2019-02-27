@@ -62,22 +62,26 @@ public class AI
         dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , world.getMap().getCell( ( rowMin + rowMax ) / 2 , columnMax) ) ;
         dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , world.getMap().getCell( rowMax , ( columnMin + columnMax ) / 2 ) ) ;
         dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , world.getMap().getCell( rowMin , ( columnMin + columnMax ) / 2 ) ) ;
-        int midRow = ( my_heroes[1].getCurrentCell().getRow() + my_heroes[1].getCurrentCell().getRow() + my_heroes[1].getCurrentCell().getRow() ) / 3 ;
-        int midColumn = ( my_heroes[1].getCurrentCell().getColumn() + my_heroes[2].getCurrentCell().getColumn() + my_heroes[3].getCurrentCell().getColumn() ) / 3 ;
-        Cell midCell = world.getMap().getCell( midRow , midColumn ) ;
-        int opp_hero_DIS = Integer.MAX_VALUE ;
-        Cell target_cell ;
+        
         if ( opp_heroes.length > 0 )
         {
+            int minDis = Integer.MAX_VALUE ;
             for ( int i = 0 ; i < opp_heroes.length ; ++i )
             {
-                if ( world.manhattanDistance( midCell , opp_heroes[i].getCurrentCell() ) < opp_hero_DIS )
+                if ( world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis )
                 {
-                    opp_hero_DIS = world.manhattanDistance( midCell , opp_heroes[i].getCurrentCell() ) ;
-                    target_cell = opp_heroes[i].getCurrentCell() ;
-                    dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , target_cell ) ;
-                    dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , target_cell ) ;
-                    dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , target_cell ) ;
+                    minDis = world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                    dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                }
+                if ( world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis )
+                {
+                    minDis = world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                    dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                }
+                if ( world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis )
+                {
+                    minDis = world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                    dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                 }
             }
         }
@@ -85,13 +89,13 @@ public class AI
         int HP = Integer.MAX_VALUE ;
         for ( int i = 1 ; i < my_heroes.length ; ++i )
         {
-            if ( my_heroes[i].getCurrentHP() < HP )
+            if ( my_heroes[i].getCurrentHP() < HP && my_heroes[i].getCurrentHP() != 0 )
             {
                 HP = my_heroes[i].getCurrentHP();
                 lowHPHero = my_heroes[i] ;
             }
         }
-        if ( lowHPHero.getCurrentCell().isInObjectiveZone() ) dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , lowHPHero.getCurrentCell() ) ;
+        dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , lowHPHero.getCurrentCell() ) ;
         if ( dir_1.length != 0 ) world.moveHero(my_heroes[0], dir_1[0] );
         if ( dir_2.length != 0 ) world.moveHero(my_heroes[1], dir_2[0]) ;
         if ( dir_3.length != 0 ) world.moveHero(my_heroes[2], dir_3[0]) ;
@@ -123,7 +127,7 @@ public class AI
                 if (my_heroes[0].getAbility(AbilityName.HEALER_HEAL).isReady())
                     world.castAbility(my_heroes[0], AbilityName.HEALER_HEAL, iNeedHeal.getCurrentCell());
 
-                //Do Healer_Attack
+                    //Do Healer_Attack
                 else {
                     int min = Integer.MAX_VALUE;
                     Cell target_cell = null;
