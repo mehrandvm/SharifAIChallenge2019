@@ -145,15 +145,32 @@ public class AI
                 }
             }
             if(my_heroes[i].getName() == HeroName.GUARDIAN){
-                //Do Guardian_Attack
-
-
+                Cell target_cell=null;
+                for(int j=0;j<4;j++){
+                    if(my_heroes[j].getName()== HeroName.HEALER)
+                        healer_index=j;
+                }
                 //Do Guardian_fortify
+                if(my_heroes[i].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() &&
+                        my_heroes[healer_index].getCurrentHP()<101 && sign==false ){
+                    sign=true;
+                    world.castAbility(my_heroes[i],AbilityName.GUARDIAN_FORTIFY,my_heroes[healer_index].getCurrentCell());
 
+                }
 
-
-                //Do Guardian_Dodge
-
+                //Do Guardian_Attack
+                else {
+                    int min=Integer.MAX_VALUE;
+                    for(int j=0;j<4;j++){
+                        if(!opp_heroes[j].getCurrentCell().isInVision()) continue;
+                        int distance=world.manhattanDistance(my_heroes[i].getCurrentCell(),opp_heroes[j].getCurrentCell());
+                        if(distance < min){
+                            min=distance;
+                            target_cell=opp_heroes[j].getCurrentCell();
+                        }
+                    }
+                    world.castAbility(my_heroes[i],AbilityName.GUARDIAN_ATTACK,target_cell);
+                }
 
             }
         }
