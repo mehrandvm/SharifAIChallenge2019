@@ -19,7 +19,7 @@ public class AI
         System.out.println("pick started");
         if ( world.getCurrentTurn() == 0 )
         {
-            world.pickHero( HeroName.HEALER ) ;
+            world.pickHero( HeroName.GUARDIAN ) ;
         }
         if ( world.getCurrentTurn() == 1 )
         {
@@ -88,7 +88,7 @@ public class AI
                 }
             }
         }
-        dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , healerCell( world ) ) ;
+        dir_1 = healerDir( world ) ;
         int currentHP = world.getAP() ;
         if ( dir_1.length != 0 && currentHP > my_heroes[0].getMoveAPCost() ) world.moveHero( my_heroes[0] , dir_1[0] );
         currentHP -= my_heroes[0].getMoveAPCost() ;
@@ -103,78 +103,27 @@ public class AI
         System.out.println("action started");
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes();
-        boolean sign=false;
-        for( int i = 0 ; i < my_heroes.length ; ++i )
+        if ( opp_heroes.length != 0 )
         {
-            if ( my_heroes[i].getName() == HeroName.HEALER && i != 0 )
+            Cell target_cell = null ;
+            int oppHP = Integer.MAX_VALUE ;
+            for( int i = 0 ; i < opp_heroes.length ; ++i  )
             {
-                Hero heroSwaper = my_heroes[0] ;
-                my_heroes[0] = my_heroes[i] ;
-                my_heroes[i] = heroSwaper ;
+                if ( opp_heroes[i].getCurrentHP() < oppHP )
+                {
+                    oppHP = opp_heroes[i].getCurrentHP() ;
+                    target_cell = opp_heroes[i].getCurrentCell() ;
+                }
             }
+            if (my_heroes[1].getCurrentHP() < 81 && my_heroes[1].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() ) world.castAbility(my_heroes[1], AbilityName.GUARDIAN_FORTIFY , my_heroes[1].getCurrentCell() );
+            if (my_heroes[2].getCurrentHP() < 81 && my_heroes[2].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() ) world.castAbility(my_heroes[2], AbilityName.GUARDIAN_FORTIFY , my_heroes[2].getCurrentCell() );
+            if (my_heroes[3].getCurrentHP() < 81 && my_heroes[3].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() ) world.castAbility(my_heroes[3], AbilityName.GUARDIAN_FORTIFY , my_heroes[3].getCurrentCell() );
+            if (my_heroes[1].getAbility(AbilityName.GUARDIAN_ATTACK ).isReady() && target_cell != null ) world.castAbility(my_heroes[1], AbilityName.GUARDIAN_ATTACK , target_cell );
+            if (my_heroes[2].getAbility(AbilityName.GUARDIAN_ATTACK ).isReady() && target_cell != null ) world.castAbility(my_heroes[2], AbilityName.GUARDIAN_ATTACK , target_cell );
+            if (my_heroes[3].getAbility(AbilityName.GUARDIAN_ATTACK ).isReady() && target_cell != null ) world.castAbility(my_heroes[3], AbilityName.GUARDIAN_ATTACK , target_cell );
         }
-        for( int i = 0 ; i < my_heroes.length ; ++i ) {
-            if (my_heroes[i].getName() == HeroName.HEALER) {
-                //Do Healer_Heal
-                Hero iNeedHeal = my_heroes[1];
-                if (my_heroes[2].getCurrentHP() < my_heroes[1].getCurrentHP() && my_heroes[2].getCurrentHP() < my_heroes[3].getCurrentHP())
-                    iNeedHeal = my_heroes[2];
-                if (my_heroes[3].getCurrentHP() < my_heroes[1].getCurrentHP() && my_heroes[3].getCurrentHP() < my_heroes[2].getCurrentHP())
-                    iNeedHeal = my_heroes[3];
-                if (my_heroes[0].getAbility(AbilityName.HEALER_HEAL).isReady())
-                    world.castAbility(my_heroes[0], AbilityName.HEALER_HEAL, iNeedHeal.getCurrentCell());
-
-                //Do Healer_Attack
-                else {
-                    int min = Integer.MAX_VALUE;
-                    Cell target_cell = null;
-
-                    for (int j = 0; j < 4; j++) {
-                        if (!opp_heroes[j].getCurrentCell().isInVision()) continue;
-                        int distance = world.manhattanDistance(my_heroes[i].getCurrentCell(), opp_heroes[j].getCurrentCell());
-                        if (distance < min) {
-                            min = distance;
-                            target_cell = opp_heroes[j].getCurrentCell();
-                        }
-
-                        world.castAbility(my_heroes[0], AbilityName.HEALER_ATTACK, target_cell);
-                    }
-                }
-            }
-            if(my_heroes[i].getName() == HeroName.GUARDIAN){
-                int healer_index=0;
-                Cell target_cell_a=null;
-                for(int j=0;j<4;j++){
-                    if(my_heroes[j].getName()== HeroName.HEALER)
-                        healer_index=j;
-                }
-                //Do Guardian_fortify
-                if(my_heroes[i].getAbility(AbilityName.GUARDIAN_FORTIFY).isReady() &&
-                        my_heroes[healer_index].getCurrentHP()<101 && sign==false ){
-                    sign=true;
-                    world.castAbility(my_heroes[i],AbilityName.GUARDIAN_FORTIFY,my_heroes[healer_index].getCurrentCell());
-
-                }
-
-                //Do Guardian_Attack
-                else {
-                    int min=Integer.MAX_VALUE;
-                    for(int j=0;j<4;j++){
-                        if(!opp_heroes[j].getCurrentCell().isInVision()) continue;
-                        int distance=world.manhattanDistance(my_heroes[i].getCurrentCell(),opp_heroes[j].getCurrentCell());
-                        if(distance < min){
-                            min=distance;
-                            target_cell_a=opp_heroes[j].getCurrentCell();
-                        }
-                    }
-                    world.castAbility(my_heroes[i],AbilityName.GUARDIAN_ATTACK,target_cell_a);
-                }
-
-            }
-        }
-
     }
-    public Cell healerCell ( World world )
+    public Direction[] healerDir ( World world )
     {
         Hero[] myHero = world.getMyHeroes() ;
         for( int i = 0 ; i < myHero.length ; ++i )
@@ -196,11 +145,6 @@ public class AI
                 lowHPHero = myHero[i] ;
             }
         }
-        Cell[] objectivZone = world.getMap().getObjectiveZone() ;
-        for ( int i = 0 ; i < objectivZone.length ; ++i )
-        {
-            if ( world.manhattanDistance( objectivZone[i] , lowHPHero.getCurrentCell() ) < 4 ) return objectivZone[i] ;
-        }
-        return objectivZone[(int)( Math.random() * objectivZone.length ) ] ;
+        return world.getPathMoveDirections( myHero[0].getCurrentCell() , lowHPHero.getCurrentCell() ) ;
     }
-}s
+}
