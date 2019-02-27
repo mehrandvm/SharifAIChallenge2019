@@ -88,8 +88,9 @@ public class AI
                 }
             }
         }
-
+        dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , healerCell( world ) ) ;
         int currentHP = world.getAP() ;
+        if ( dir_1.length != 0 && currentHP > my_heroes[0].getMoveAPCost() ) world.moveHero( my_heroes[0] , dir_1[0] );
         currentHP -= my_heroes[0].getMoveAPCost() ;
         if ( dir_2.length != 0 && currentHP - my_heroes[1].getMoveAPCost() > 0 ) world.moveHero(my_heroes[1], dir_2[0]) ;
         currentHP -= my_heroes[1].getMoveAPCost() ;
@@ -148,13 +149,11 @@ public class AI
                 lowHPHero = myHero[i] ;
             }
         }
-        if ( lowHPHero.getCurrentCell().isInObjectiveZone() )
+        Cell[] objectivZone = world.getMap().getObjectiveZone() ;
+        for ( int i = 0 ; i < objectivZone.length ; ++i )
         {
-
+            if ( world.manhattanDistance( objectivZone[i] , lowHPHero.getCurrentCell() ) < 4 ) return objectivZone[i] ;
         }
-        else
-        {
-
-        }
+        return objectivZone[(int)( Math.random() * objectivZone.length ) ] ;
     }
 }
