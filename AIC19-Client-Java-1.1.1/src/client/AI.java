@@ -62,15 +62,18 @@ public class AI
         dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , world.getMap().getCell( ( rowMin + rowMax ) / 2 , columnMax) ) ;
         dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , world.getMap().getCell( rowMax , ( columnMin + columnMax ) / 2 ) ) ;
         dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , world.getMap().getCell( rowMin , ( columnMin + columnMax ) / 2 ) ) ;
-        int opp_hero_HP = Integer.MAX_VALUE ;
+        int midRow = ( my_heroes[1].getCurrentCell().getRow() + my_heroes[1].getCurrentCell().getRow() + my_heroes[1].getCurrentCell().getRow() ) / 3 ;
+        int midColumn = ( my_heroes[1].getCurrentCell().getColumn() + my_heroes[2].getCurrentCell().getColumn() + my_heroes[3].getCurrentCell().getColumn() ) / 3 ;
+        Cell midCell = world.getMap().getCell( midRow , midColumn ) ;
+        int opp_hero_DIS = Integer.MAX_VALUE ;
         Cell target_cell ;
         if ( opp_heroes.length > 0 )
         {
             for ( int i = 0 ; i < opp_heroes.length ; ++i )
             {
-                if ( opp_heroes[i].getCurrentHP() < opp_hero_HP && opp_heroes[i].getCurrentCell().isInObjectiveZone() )
+                if ( world.manhattanDistance( midCell , opp_heroes[i].getCurrentCell() ) < opp_hero_DIS )
                 {
-                    opp_hero_HP = opp_heroes[i].getCurrentHP() ;
+                    opp_hero_DIS = world.manhattanDistance( midCell , opp_heroes[i].getCurrentCell() ) ;
                     target_cell = opp_heroes[i].getCurrentCell() ;
                     dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , target_cell ) ;
                     dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , target_cell ) ;
