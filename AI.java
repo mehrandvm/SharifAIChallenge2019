@@ -203,4 +203,4 @@ public class AI
         }
         return objectivZone[(int)( Math.random() * objectivZone.length ) ] ;
     }
-}
+}s
