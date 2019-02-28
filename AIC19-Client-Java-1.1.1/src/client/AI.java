@@ -42,6 +42,15 @@ public class AI
         Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes() ;
+        for ( int i = 1 ; i < my_heroes.length ; ++i )
+        {
+            if ( my_heroes[i].getName() == HeroName.HEALER )
+            {
+                Hero heroSwaper = my_heroes[i] ;
+                my_heroes[i] = my_heroes[0] ;
+                my_heroes[0] = heroSwaper ;
+            }
+        }
         int rowMax = Integer.MIN_VALUE ;
         int columnMax = Integer.MIN_VALUE ;
         int rowMin = Integer.MAX_VALUE ;
