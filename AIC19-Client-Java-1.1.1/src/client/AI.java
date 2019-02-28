@@ -65,22 +65,24 @@ public class AI
         
         if ( opp_heroes.length > 0 )
         {
-            int minDis = Integer.MAX_VALUE ;
+            int minDis1 = Integer.MAX_VALUE ;
+            int minDis2 = Integer.MAX_VALUE ;
+            int minDis3 = Integer.MAX_VALUE ;
             for ( int i = 0 ; i < opp_heroes.length ; ++i )
             {
-                if ( world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis )
+                if ( world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis1 )
                 {
-                    minDis = world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                    minDis1 = world.manhattanDistance( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                     dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                 }
-                if ( world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis )
+                if ( world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis2 )
                 {
-                    minDis = world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                    minDis2 = world.manhattanDistance( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                     dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                 }
-                if ( world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis )
+                if ( world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) < minDis3 )
                 {
-                    minDis = world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
+                    minDis3 = world.manhattanDistance( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                     dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , opp_heroes[i].getCurrentCell() ) ;
                 }
             }
