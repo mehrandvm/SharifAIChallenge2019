@@ -38,15 +38,16 @@ public class AI
     public void moveTurn( World world )
     {System.out.println("move started");
         Cell[] obj_cell = world.getMap().getObjectiveZone() ;
+        Cell[] trg_cell = new Cell[4] ;
+        Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
         Hero[] my_heroes = world.getMyHeroes();
         Hero[] opp_heroes = world.getOppHeroes() ;
-        Cell[] trg_cell = new Cell[4] ;
-        int BLASTER = 0 , GUARDIAN = 0 , HEALER = 0 , SENTARY = 0 ;
-        Cell[] abjectiv_zone = world.getMap().getObjectiveZone() ;
         int rowMax = Integer.MIN_VALUE ;
         int columnMax = Integer.MIN_VALUE ;
         int rowMin = Integer.MAX_VALUE ;
         int columnMin = Integer.MAX_VALUE ;
+        Hero lowHPHero = null ;
+        int HP = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < abjectiv_zone.length ; ++i )
         {
             if ( abjectiv_zone[i].getRow() > rowMax ) rowMax = abjectiv_zone[i].getRow() ;
@@ -62,7 +63,7 @@ public class AI
         dir_2 = world.getPathMoveDirections( my_heroes[1].getCurrentCell() , world.getMap().getCell( ( rowMin + rowMax ) / 2 , columnMax) ) ;
         dir_3 = world.getPathMoveDirections( my_heroes[2].getCurrentCell() , world.getMap().getCell( rowMax , ( columnMin + columnMax ) / 2 ) ) ;
         dir_4 = world.getPathMoveDirections( my_heroes[3].getCurrentCell() , world.getMap().getCell( rowMin , ( columnMin + columnMax ) / 2 ) ) ;
-        
+
         if ( opp_heroes.length > 0 )
         {
             int minDis1 = Integer.MAX_VALUE ;
@@ -87,8 +88,6 @@ public class AI
                 }
             }
         }
-        Hero lowHPHero = null ;
-        int HP = Integer.MAX_VALUE ;
         for ( int i = 1 ; i < my_heroes.length ; ++i )
         {
             if ( my_heroes[i].getCurrentHP() < HP && my_heroes[i].getCurrentHP() != 0 )
