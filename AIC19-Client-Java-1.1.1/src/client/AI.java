@@ -40,18 +40,28 @@ public class AI
     public void moveTurn(World world)
     {
         System.out.println("move started");
-        //Hero[] heroes = world.getMyHeroes();
-
-        /* Specific Cells */
-
-
-        /* Directions to Targets */
-
-
-        /* Move logic for heroes */
-
-        /* Additional Dynamic Moves */
-
+        Hero[] myHeroes = world.getMyHeroes();
+        Hero[] oppHeroes = world.getOppHeroes() ;
+        Cell[] objZone = world.getMap().getObjectiveZone() ;
+        int rowMax = Integer.MIN_VALUE ;
+        int rowMin = Integer.MAX_VALUE ;
+        int columnMax = Integer.MIN_VALUE ;
+        int columnMin = Integer.MAX_VALUE ;
+        // finding max & min of row & column
+        for ( int i = 0 ; i < objZone.length ; ++i )
+        {
+            if ( objZone[i].getRow() > rowMax ) rowMax = objZone[i].getRow() ;
+            if ( objZone[i].getRow() < rowMin ) rowMin = objZone[i].getRow() ;
+            if ( objZone[i].getColumn() > columnMax ) columnMax = objZone[i].getColumn() ;
+            if ( objZone[i].getColumn() < columnMin ) columnMin = objZone[i].getColumn() ;
+        }
+        // default initialization
+        Direction[][] dirs = new  Direction[4][];
+        dirs[0] = world.getPathMoveDirections( myHeroes[0].getCurrentCell() , world.getMap().getCell( rowMax , ( columnMax + columnMin ) / 2 ) ) ;
+        dirs[1] = world.getPathMoveDirections( myHeroes[1].getCurrentCell() , world.getMap().getCell( rowMin , ( columnMax + columnMin ) / 2 ) ) ;
+        dirs[2] = world.getPathMoveDirections( myHeroes[2].getCurrentCell() , world.getMap().getCell( ( rowMax + rowMin ) / 2 , columnMax ) ) ;
+        dirs[3] = world.getPathMoveDirections( myHeroes[2].getCurrentCell() , world.getMap().getCell( ( rowMax + rowMin ) / 2 , columnMin ) ) ;
+        // dynamic replacement
     }
 
     public void actionTurn(World world) {
