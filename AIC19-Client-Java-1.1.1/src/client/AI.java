@@ -89,9 +89,9 @@ public class AI
         Direction[] dir_3 = world.getPathMoveDirections( myHeroes[2].getCurrentCell() , thirdCell ) ;
         Direction[] dir_4 = world.getPathMoveDirections( myHeroes[3].getCurrentCell() , fourthCell ) ;
         if ( dir_1.length > 0 ) world.moveHero( myHeroes[0] , dir_1[0] ) ;
-        if ( dir_2.length > 0 ) world.moveHero( myHeroes[1] , dir_1[0] ) ;
-        if ( dir_3.length > 0 ) world.moveHero( myHeroes[2] , dir_1[0] ) ;
-        if ( dir_4.length > 0 ) world.moveHero( myHeroes[3] , dir_1[0] ) ;
+        if ( dir_2.length > 0 ) world.moveHero( myHeroes[1] , dir_2[0] ) ;
+        if ( dir_3.length > 0 ) world.moveHero( myHeroes[2] , dir_3[0] ) ;
+        if ( dir_4.length > 0 ) world.moveHero( myHeroes[3] , dir_4[0] ) ;
     }
 
     public void actionTurn(World world) {
