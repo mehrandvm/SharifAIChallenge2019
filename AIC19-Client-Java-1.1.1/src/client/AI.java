@@ -228,17 +228,4 @@ public class AI
         /* ---- End of Action Logic Section ---- */
 
     }
-    static  Cell validCell( Cell cell , World world  , int count )
-    {
-        if ( cell.isInObjectiveZone() && cell.isWall() && count < 2 )
-        {
-            int row = cell.getRow() ;
-            int column = cell.getColumn() ;
-            validCell( world.getMap().getCell( row + 1 , column ) , world , count + 1 ) ;
-            validCell( world.getMap().getCell( row - 1 , column ) , world , count + 1 ) ;
-            validCell( world.getMap().getCell( row , column + 1 ) , world , count + 1 ) ;
-            validCell( world.getMap().getCell( row , column - 1 ) , world , count + 1 ) ;
-        }
-        return  cell ;
-    }
 }
