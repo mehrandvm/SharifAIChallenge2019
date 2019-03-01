@@ -53,33 +53,40 @@ public class AI
         {
             if ( world.manhattanDistance( respwnZone[0] , objZone[i] ) < minDis )
             {
+                System.out.println("***");
                 firstCell = objZone[i] ;
                 minDis = world.manhattanDistance( respwnZone[0] , objZone[i] ) ;
             }
         }
+        System.out.println("###");
         minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[1] , objZone[i] ) < minDis )
             {
+                System.out.println("***");
                 secondCell = objZone[i] ;
                 minDis = world.manhattanDistance( respwnZone[1] , objZone[i] ) ;
             }
         }
+        System.out.println("###");
         minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[2] , objZone[i] ) < minDis )
             {
+                System.out.println("***");
                 thirdCell = objZone[i] ;
                 minDis = world.manhattanDistance( respwnZone[2] , objZone[i] ) ;
             }
         }
+        System.out.println("###");
         minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[3] , objZone[i] ) < minDis )
             {
+                System.out.println("***");
                 fourthCell = objZone[i] ;
                 minDis = world.manhattanDistance( respwnZone[3] , objZone[i] ) ;
             }
@@ -107,6 +114,8 @@ public class AI
         int distance=0;
         for(int i =0;i < my_heroes.length;i++){
             for (int j=0 ; j <opp_heros.length;j++){
+                    if(!opp_heros[j].getCurrentCell().isInVision())
+                        continue;
                 distance = world.manhattanDistance(my_heroes[i].getCurrentCell(),opp_heros[j].getCurrentCell());
                 if(distance < minDistance){
                     minDistance=distance;
