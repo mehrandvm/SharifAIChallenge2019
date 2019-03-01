@@ -103,34 +103,34 @@ public class AI
             {
                 if ( rowLength % 2 == 0 )
                 {
-                    firstCell = world.getMap().getCell( rowMin , rowLength / 2 ) ;
-                    secondCell = world.getMap().getCell( rowMin , ( rowLength / 2 ) - 1 ) ;
-                    thirdCell = world.getMap().getCell( rowMin + 2 , 2 ) ;
-                    fourthCell = world.getMap().getCell( rowMin + 2 , rowLength - 2 ) ;
+                    firstCell = world.getMap().getCell( rowMin , columnMin + rowLength / 2 ) ;
+                    secondCell = world.getMap().getCell( rowMin , columnMin + ( rowLength / 2 ) - 1 ) ;
+                    thirdCell = world.getMap().getCell( rowMin + 2 , columnMin + 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMin + 2 , columnMin + rowLength - 2 ) ;
                 }
                 if ( rowLength % 2 != 0 )
                 {
-                    firstCell = world.getMap().getCell( rowMin , ( rowLength / 2 ) - 1 ) ;
-                    secondCell = world.getMap().getCell( rowMin , ( rowLength / 2 ) + 1 ) ;
-                    thirdCell = world.getMap().getCell( rowMin + 2 , 2 ) ;
-                    fourthCell = world.getMap().getCell( rowMin + 2  , rowLength - 2 ) ;
+                    firstCell = world.getMap().getCell( rowMin , columnMin + ( rowLength / 2 ) - 1 ) ;
+                    secondCell = world.getMap().getCell( rowMin , columnMin + ( rowLength / 2 ) + 1 ) ;
+                    thirdCell = world.getMap().getCell( rowMin + 2 , columnMin + 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMin + 2  , columnMin + rowLength - 2 ) ;
                 }
             }
             if ( firstCell.getRow() == rowMax )
             {
                 if ( rowLength % 2 == 0 )
                 {
-                    firstCell = world.getMap().getCell( rowMax , rowLength / 2 ) ;
-                    secondCell = world.getMap().getCell( rowMax , ( rowLength / 2 ) - 1 ) ;
-                    thirdCell = world.getMap().getCell( rowMax - 2 , 2 ) ;
-                    fourthCell = world.getMap().getCell( rowMax - 2 , rowLength - 2 ) ;
+                    firstCell = world.getMap().getCell( rowMax , columnMin + rowLength / 2 ) ;
+                    secondCell = world.getMap().getCell( rowMax , columnMin + ( rowLength / 2 ) - 1 ) ;
+                    thirdCell = world.getMap().getCell( rowMax - 2 , columnMin + 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMax - 2 , columnMin + rowLength - 2 ) ;
                 }
                 if ( rowLength % 2 != 0 )
                 {
-                    firstCell = world.getMap().getCell( rowMax , ( rowLength / 2 ) - 1 ) ;
-                    secondCell = world.getMap().getCell( rowMax , ( rowLength / 2 ) + 1 ) ;
-                    thirdCell = world.getMap().getCell( rowMax - 2 , 2 ) ;
-                    fourthCell = world.getMap().getCell( rowMax - 2  , rowLength - 2 ) ;
+                    firstCell = world.getMap().getCell( rowMax , columnMin + ( rowLength / 2 ) - 1 ) ;
+                    secondCell = world.getMap().getCell( rowMax , columnMin + ( rowLength / 2 ) + 1 ) ;
+                    thirdCell = world.getMap().getCell( rowMax - 2 , columnMin + 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMax - 2  , columnMin + rowLength - 2 ) ;
                 }
             }
         }
@@ -141,34 +141,34 @@ public class AI
             {
                 if ( columnLength % 2 == 0 )
                 {
-                    firstCell = world.getMap().getCell( ( columnLength / 2 ) - 1 , columnMin ) ;
-                    secondCell = world.getMap().getCell( columnLength / 2  , columnMin ) ;
-                    thirdCell = world.getMap().getCell( 2 , columnMin + 2 ) ;
-                    fourthCell = world.getMap().getCell( columnLength - 2 , columnMin + 2 ) ;
+                    firstCell = world.getMap().getCell( rowMin + ( columnLength / 2 ) - 1 , columnMin ) ;
+                    secondCell = world.getMap().getCell( rowMin + columnLength / 2  , columnMin ) ;
+                    thirdCell = world.getMap().getCell( rowMin + 2 , columnMin + 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMin + columnLength - 2 , columnMin + 2 ) ;
                 }
                 if ( columnLength % 2 != 0 )
                 {
-                    firstCell = world.getMap().getCell( ( columnLength / 2 ) + 1 , columnMin ) ;
-                    secondCell = world.getMap().getCell( ( columnLength / 2 ) - 1 , columnMin ) ;
-                    thirdCell = world.getMap().getCell( 2  , columnMin + 2 ) ;
-                    fourthCell = world.getMap().getCell( columnLength - 2 , columnMin + 2 ) ;
+                    firstCell = world.getMap().getCell( rowMin + ( columnLength / 2 ) + 1 , columnMin ) ;
+                    secondCell = world.getMap().getCell( rowMin + ( columnLength / 2 ) - 1 , columnMin ) ;
+                    thirdCell = world.getMap().getCell( rowMin + 2  , columnMin + 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMin + columnLength - 2 , columnMin + 2 ) ;
                 }
             }
             if ( firstCell.getColumn() == columnMax )
             {
                 if ( columnLength % 2 == 0 )
                 {
-                    firstCell = world.getMap().getCell( ( columnLength / 2 ) - 1 , columnMax ) ;
-                    secondCell = world.getMap().getCell( columnLength / 2  , columnMax ) ;
-                    thirdCell = world.getMap().getCell( 2 , columnMax - 2 ) ;
-                    fourthCell = world.getMap().getCell( columnLength - 2 , columnMax - 2 ) ;
+                    firstCell = world.getMap().getCell( rowMin + ( columnLength / 2 ) - 1 , columnMax ) ;
+                    secondCell = world.getMap().getCell( rowMin + columnLength / 2  , columnMax ) ;
+                    thirdCell = world.getMap().getCell( rowMin + 2 , columnMax - 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMin + columnLength - 2 , columnMax - 2 ) ;
                 }
                 if ( columnLength % 2 != 0 )
                 {
-                    firstCell = world.getMap().getCell( ( columnLength / 2 ) + 1 , columnMax ) ;
-                    secondCell = world.getMap().getCell( ( columnLength / 2 ) - 1 , columnMax ) ;
-                    thirdCell = world.getMap().getCell( 2  , columnMax - 2 ) ;
-                    fourthCell = world.getMap().getCell( columnLength - 2 , columnMax - 2 ) ;
+                    firstCell = world.getMap().getCell( rowMin + ( columnLength / 2 ) + 1 , columnMax ) ;
+                    secondCell = world.getMap().getCell( rowMin + ( columnLength / 2 ) - 1 , columnMax ) ;
+                    thirdCell = world.getMap().getCell( rowMin + 2  , columnMax - 2 ) ;
+                    fourthCell = world.getMap().getCell( rowMin + columnLength - 2 , columnMax - 2 ) ;
                 }
             }
         }
