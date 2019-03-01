@@ -17,31 +17,64 @@ public class AI
     public void pickTurn(World world)
     {
         System.out.println("pick started");
-        world.pickHero(HeroName.values()[world.getCurrentTurn()]);
+        //world.pickHero(HeroName.values()[world.getCurrentTurn()]);
+        System.out.println("pick started");
+        if ( world.getCurrentTurn() == 0 )
+        {
+            world.pickHero( HeroName.BLASTER ) ;
+        }
+        if ( world.getCurrentTurn() == 1 )
+        {
+            world.pickHero( HeroName.BLASTER ) ;
+        }
+        if ( world.getCurrentTurn() == 2 )
+        {
+            world.pickHero( HeroName.BLASTER ) ;
+        }
+        if ( world.getCurrentTurn() == 3 )
+        {
+            world.pickHero( HeroName.BLASTER ) ;
+        }
     }
 
     public void moveTurn(World world)
     {
         System.out.println("move started");
-        Hero[] heroes = world.getMyHeroes();
+        //Hero[] heroes = world.getMyHeroes();
 
-        for (Hero hero : heroes)
-        {
-            world.moveHero(hero, Direction.values()[random.nextInt(4)]);
-        }
+        /* Specific Cells */
+
+
+        /* Directions to Targets */
+
+
+        /* Move logic for heroes */
+
+        /* Additional Dynamic Moves */
+
     }
 
     public void actionTurn(World world) {
         System.out.println("action started");
-        Hero[] heroes = world.getMyHeroes();
-        Map map = world.getMap();
-        for (Hero hero : heroes)
-        {
-            int row = random.nextInt(map.getRowNum());
-            int column = random.nextInt(map.getColumnNum());
+        //Hero[] heroes = world.getMyHeroes();
+        //Map map = world.getMap();
 
-            world.castAbility(hero, hero.getAbilities()[random.nextInt(3)], row, column);
-        }
+        /* Specific Cells */
+
+
+        /* Directions to Targets */
+
+
+        /* ------- Action Logic Section ------- */
+
+        /* Special Ability Actions */
+
+        /* Defending & Dodging Actions */
+
+        /* Attacking Actions */
+
+        /* ---- End of Action Logic Section ---- */
+
     }
 
 }
