@@ -119,10 +119,21 @@ public class AI
         }
         for ( int i = 1 ; i < my_heroes.length ; ++i )
         {
-            if ( my_heroes[i].getCurrentHP() < HP && my_heroes[i].getCurrentHP() != 0 )
+            if ( my_heroes[i].getCurrentHP() <= HP && my_heroes[i].getCurrentHP() != 0 )
             {
-                HP = my_heroes[i].getCurrentHP();
-                lowHPHero = my_heroes[i] ;
+                if ( my_heroes[i].getCurrentHP() == HP )
+                {
+                    if ( world.manhattanDistance( my_heroes[i].getCurrentCell() , my_heroes[0].getCurrentCell() ) < world.manhattanDistance( lowHPHero.getCurrentCell() , my_heroes[0].getCurrentCell() ) )
+                    {
+                        HP = my_heroes[i].getCurrentHP();
+                        lowHPHero = my_heroes[i] ;
+                    }
+                }
+                 else
+                {
+                    HP = my_heroes[i].getCurrentHP();
+                    lowHPHero = my_heroes[i] ;
+                }
             }
         }
         dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , lowHPHero.getCurrentCell() ) ;
