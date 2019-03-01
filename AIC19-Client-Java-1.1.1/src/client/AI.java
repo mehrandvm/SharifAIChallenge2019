@@ -48,7 +48,7 @@ public class AI
         Cell secondCell = null ;
         Cell thirdCell = null ;
         Cell fourthCell = null ;
-        int minDis = Integer.MIN_VALUE ;
+        int minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[0] , objZone[i] ) < minDis )
@@ -57,7 +57,7 @@ public class AI
                 minDis = world.manhattanDistance( respwnZone[0] , objZone[i] ) ;
             }
         }
-        minDis = Integer.MIN_VALUE ;
+        minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[1] , objZone[i] ) < minDis )
@@ -66,7 +66,7 @@ public class AI
                 minDis = world.manhattanDistance( respwnZone[1] , objZone[i] ) ;
             }
         }
-        minDis = Integer.MIN_VALUE ;
+        minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[2] , objZone[i] ) < minDis )
@@ -75,7 +75,7 @@ public class AI
                 minDis = world.manhattanDistance( respwnZone[2] , objZone[i] ) ;
             }
         }
-        minDis = Integer.MIN_VALUE ;
+        minDis = Integer.MAX_VALUE ;
         for ( int i = 0 ; i < objZone.length ; ++i )
         {
             if ( world.manhattanDistance( respwnZone[3] , objZone[i] ) < minDis )
