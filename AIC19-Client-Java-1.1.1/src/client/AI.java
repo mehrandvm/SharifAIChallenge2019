@@ -137,7 +137,7 @@ public class AI
             }
         }
         dir_1 = world.getPathMoveDirections( my_heroes[0].getCurrentCell() , lowHPHero.getCurrentCell() ) ;
-        if ( dir_1.length != 0 ) world.moveHero(my_heroes[0], dir_1[0] );
+        if ( dir_1.length != 0 && world.getCurrentTurn() > 10 ) world.moveHero(my_heroes[0], dir_1[0] );
         if ( dir_2.length != 0 ) world.moveHero(my_heroes[1], dir_2[0]) ;
         if ( dir_3.length != 0 ) world.moveHero(my_heroes[2], dir_3[0]) ;
         if ( dir_4.length != 0 ) world.moveHero(my_heroes[3], dir_4[0]) ;
